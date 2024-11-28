@@ -40,7 +40,6 @@ use Drupal\search_api\Entity\Index;
  *   }
  * )
  */
-
 class JSONFieldProcessorConfig extends ConfigEntityBase {
 
   /**
