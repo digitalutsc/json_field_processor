@@ -8,7 +8,7 @@
 
 1. Install the module via Composer:
    ```bash
-   composer require homura163/json_field_processor
+   composer require drupal/json_field_processor
    ```
 2. Ensure the following dependencies are installed and enabled:
    - **Search API**
