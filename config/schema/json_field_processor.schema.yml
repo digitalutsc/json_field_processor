@@ -1,0 +1,30 @@
+# Schema for configuration entities in the JSON Field Processor module.
+
+json_field_processor.submission.*:
+  type: config_entity
+  label: 'JSON Field Processor Submission'
+  mapping:
+    id:
+      type: string
+      label: 'Submission ID'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Label'
+    node_field:
+      type: string
+      label: 'Node Field'
+    field_name:
+      type: string
+      label: 'Field Name'
+    json_path:
+      type: string
+      label: 'JSON Path'
+    submitted:
+      type: timestamp
+      label: 'Submission Timestamp'
+    langcode:
+      type: string
+      label: 'Default Language'

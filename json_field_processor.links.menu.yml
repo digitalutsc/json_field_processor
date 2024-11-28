@@ -1,0 +1,23 @@
+# # Define a menu item for the JSON Field Processor module.
+
+# json_field_processor.menu:
+#   title: 'JSON Field Processor'
+#   route_name: entity.json_field_processor_config.list
+#   description: 'Manage JSON Field Processor configurations'
+
+# Define the top-level menu item for JSON Field Processor under "Search and Metadata".
+json_field_processor.admin:
+  title: 'JSON Field Processor'
+  description: 'Manage JSON Field Processor configurations'
+  route_name: entity.json_field_processor_config.list
+  parent: system.admin_config_search
+  weight: 1  # Adjust to control the ordering within this category
+
+
+# Submenu link for listing all configurations.
+json_field_processor.admin_json_field_processor_config_list:
+  title: 'Configuration List'
+  route_name: entity.json_field_processor_config.list
+  parent: json_field_processor.admin
+  weight: 0
+

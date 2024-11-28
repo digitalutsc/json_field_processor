@@ -1,0 +1,17 @@
+# Define permissions for the JSON Field Processor module.
+
+'administer json field processor':
+  title: 'Administer JSON Field Processor'
+  description: 'Create, edit, and delete JSON field mappings.'
+
+'view json field processor configurations':
+  title: 'View JSON Field Processor configurations'
+  description: 'Allow users to view JSON field mappings.'
+
+'edit json field processor configurations':
+  title: 'Edit JSON Field Processor configurations'
+  description: 'Allow users to edit JSON field mappings.'
+
+'delete json field processor configurations':
+  title: 'Delete JSON Field Processor configurations'
+  description: 'Allow users to delete JSON field mappings.'

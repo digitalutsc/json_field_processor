@@ -1,0 +1,14 @@
+{
+    "name": "homura163/json_field_processor",
+    "description": "Module to index json field data using search API",
+    "type": "drupal-module",
+    "require": {
+        "mtdowling/jmespath.php": "^2.8"
+    },
+    "authors": [
+        {
+            "name": "homura163",
+            "email": "niclouie@outlook.com"
+        }
+    ]
+}

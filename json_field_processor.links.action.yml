@@ -1,0 +1,14 @@
+# Add local task links for the JSON Field Processor module.
+
+json_field_processor.add_action:
+  route_name: entity.json_field_processor_config.add_form
+  title: 'Add JSON Field Processor Configuration'
+  appears_on:
+    - entity.json_field_processor_config.list
+
+json_field_processor.list_action:
+  route_name: entity.json_field_processor_config.list
+  title: 'View JSON Field Processor Configurations'
+  appears_on:
+    - entity.json_field_processor_config.add_form
+    - entity.json_field_processor_config.edit_form

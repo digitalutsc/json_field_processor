@@ -1,0 +1,38 @@
+# The routing.yml file defines the paths for the JSON Field Processor module.
+# Here we define the paths for managing the "json_field_processor_config" entity type.
+
+# Route for listing all configuration entities.
+entity.json_field_processor_config.list:
+  path: '/admin/json-field-processor/json_field_processor_config'
+  defaults:
+    _entity_list: json_field_processor_config
+    _title: 'JSON Field Processor Configurations'
+  requirements:
+    _permission: 'administer json field processor'
+
+# Route for adding a new configuration entity.
+entity.json_field_processor_config.add_form:
+  path: '/admin/json-field-processor/json_field_processor_config/add'
+  defaults:
+    _title: 'Add JSON Field Processor Configuration'
+    _entity_form: json_field_processor_config.add
+  requirements:
+    _entity_create_access: json_field_processor_config
+
+# Route for editing a configuration entity.
+entity.json_field_processor_config.edit_form:
+  path: '/admin/json-field-processor/json_field_processor_config/{json_field_processor_config}/edit'
+  defaults:
+    _title: 'Edit Field Mapping'
+    _entity_form: json_field_processor_config.edit
+  requirements:
+    _entity_access: json_field_processor_config.update
+
+# Route for deleting a configuration entity.
+entity.json_field_processor_config.delete_form:
+  path: '/admin/json-field-processor/json_field_processor_config/{json_field_processor_config}/delete'
+  defaults:
+    _title: 'Delete Field Mapping'
+    _entity_form: json_field_processor_config.delete
+  requirements:
+    _entity_access: json_field_processor_config.delete
