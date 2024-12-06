@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @SearchApiProcessor(
  *   id = "json_field_processor",
- *   label = @Translation("Islandora Json Data"),
- *   description = @Translation("Add index for JSON data of an Islandora site"),
+ *   label = @Translation("Json Field Data"),
+ *   description = @Translation("Add index for JSON data of a node or media item"),
  *   stages = {
  *     "add_properties" = 0,
  *   },
