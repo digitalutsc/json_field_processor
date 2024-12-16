@@ -40,63 +40,65 @@ use Drupal\search_api\Entity\Index;
  *   }
  * )
  */
-class JSONFieldProcessorConfig extends ConfigEntityBase {
+class JSONFieldProcessorConfig extends ConfigEntityBase
+{
 
-  /**
-   * The json_field_processor_config ID.
-   *
-   * @var string
-   */
-  public $id;
+    /**
+     * The json_field_processor_config ID.
+     *
+     * @var string
+     */
+    public $id;
 
-  /**
-   * The json_field_processor_config UUID.
-   *
-   * @var string
-   */
-  public $uuid;
+    /**
+     * The json_field_processor_config UUID.
+     *
+     * @var string
+     */
+    public $uuid;
 
-  /**
-   * The json_field_processor_config label.
-   *
-   * @var string
-   */
-  public $label;
+    /**
+     * The json_field_processor_config label.
+     *
+     * @var string
+     */
+    public $label;
 
-  /**
-   * The name of the field submitted.
-   *
-   * @var string
-   */
-  public $field_name;
+    /**
+     * The name of the field submitted.
+     *
+     * @var string
+     */
+    public $field_name;
 
-  /**
-   * The JSON path associated with the json_field_processor_config.
-   *
-   * @var string
-   */
-  public $json_path;
+    /**
+     * The JSON path associated with the json_field_processor_config.
+     *
+     * @var string
+     */
+    public $json_path;
 
-  /**
-   * {@inheritdoc}
-   */
-  public function delete() {
-    // Custom logic before deletion.
-    $field_name = 'json_field_processor_' . $this->get('field_name');
+    /**
+     * {@inheritdoc}
+     */
+    public function delete()
+    {
+        // Custom logic before deletion.
+        $field_name = 'json_field_processor_' . $this->get('id');
 
-    // Load the search index.
-    $indexes = Index::loadMultiple();
-    foreach ($indexes as $index) {
-      $fields = $index->getFields();
-      if (isset($fields[$field_name])) {
-        // Remove the field from the index.
-        $index->removeField($field_name);
-        $index->save();
-      }
+        // Load the search index.
+        $indexes = Index::loadMultiple();
+        foreach ($indexes as $index) {
+            $fields = $index->getFields();
+            if (isset($fields[$field_name])) {
+                // Remove the field from the index.
+                $index->removeField($field_name);
+                $index->save();
+            }
+        }
+
+        // Call parent delete to perform the actual deletion.
+        parent::delete();
     }
-
-    // Call parent delete to perform the actual deletion.
-    parent::delete();
-  }
 
 }

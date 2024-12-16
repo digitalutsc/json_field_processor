@@ -16,45 +16,48 @@ use Drupal\Core\Session\AccountInterface;
  *
  * @ingroup json_field_processor
  */
-class JSONFieldProcessorConfigAccessController extends EntityAccessControlHandler {
+class JSONFieldProcessorConfigAccessController extends EntityAccessControlHandler
+{
 
-  /**
-   * {@inheritdoc}
-   */
-  public function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    // If the user has the overarching permission, allow all operations.
-    if ($account->hasPermission('administer json field processor')) {
-      return AccessResult::allowed();
+    /**
+     * {@inheritdoc}
+     */
+    public function checkAccess(EntityInterface $entity, $operation, AccountInterface $account)
+    {
+        // If the user has the overarching permission, allow all operations.
+        if ($account->hasPermission('administer json field processor')) {
+            return AccessResult::allowed();
+        }
+
+        // Otherwise, check operation-specific permissions.
+        switch ($operation) {
+        case 'view':
+            // Allow access for view operation (or customize this further if needed).
+            return AccessResult::allowedIfHasPermission($account, 'view json field processor configurations');
+
+        case 'edit':
+            return AccessResult::allowedIfHasPermission($account, 'edit json field processor configurations');
+
+        case 'delete':
+            return AccessResult::allowedIfHasPermission($account, 'delete json field processor configurations');
+        }
+
+        // Default to the parent's access logic for unknown operations.
+        return parent::checkAccess($entity, $operation, $account);
     }
 
-    // Otherwise, check operation-specific permissions.
-    switch ($operation) {
-      case 'view':
-        // Allow access for view operation (or customize this further if needed).
-        return AccessResult::allowedIfHasPermission($account, 'view json field processor configurations');
+    /**
+     * {@inheritdoc}
+     */
+    protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = null)
+    {
+        // If the user has the overarching permission, allow create access.
+        if ($account->hasPermission('administer json field processor')) {
+            return AccessResult::allowed();
+        }
 
-      case 'edit':
-        return AccessResult::allowedIfHasPermission($account, 'edit json field processor configurations');
-
-      case 'delete':
-        return AccessResult::allowedIfHasPermission($account, 'delete json field processor configurations');
+        // Otherwise, forbid creation unless additional permissions are defined.
+        return AccessResult::allowedIfHasPermission($account, 'create json_field_processor_config');
     }
-
-    // Default to the parent's access logic for unknown operations.
-    return parent::checkAccess($entity, $operation, $account);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    // If the user has the overarching permission, allow create access.
-    if ($account->hasPermission('administer json field processor')) {
-      return AccessResult::allowed();
-    }
-
-    // Otherwise, forbid creation unless additional permissions are defined.
-    return AccessResult::allowedIfHasPermission($account, 'create json_field_processor_config');
-  }
 
 }

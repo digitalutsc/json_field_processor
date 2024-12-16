@@ -18,62 +18,67 @@ use Drupal\Core\Entity\EntityInterface;
  *
  * @ingroup json_field_processor
  */
-class JSONFieldProcessorConfigListBuilder extends ConfigEntityListBuilder {
+class JSONFieldProcessorConfigListBuilder extends ConfigEntityListBuilder
+{
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function getModuleName() {
-    return 'json_field_processor';
-  }
+    /**
+     * {@inheritdoc}
+     */
+    protected function getModuleName()
+    {
+        return 'json_field_processor';
+    }
 
-  /**
-   * Builds the header row for the entity listing.
-   *
-   * @return array
-   *   A render array structure of header strings.
-   */
-  public function buildHeader() {
-    $header['label'] = $this->t('JSON Field Processor Configuration');
-    $header['field_name'] = $this->t('Field Name');
-    $header['json_path'] = $this->t('JSON Path');
-    $header['json_field_name'] = $this->t('JSON Field Name');
-    return $header + parent::buildHeader();
-  }
+    /**
+     * Builds the header row for the entity listing.
+     *
+     * @return array
+     *   A render array structure of header strings.
+     */
+    public function buildHeader()
+    {
+        $header['label'] = $this->t('JSON Field Processor Configuration');
+        $header['field_name'] = $this->t('Field Name');
+        $header['json_path'] = $this->t('JSON Path');
+        $header['json_field_name'] = $this->t('JSON Field Name');
+        return $header + parent::buildHeader();
+    }
 
-  /**
-   * Builds a row for an entity in the entity listing.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   The entity for which to build the row.
-   *
-   * @return array
-   *   A render array of the table row for displaying the entity.
-   */
-  public function buildRow(EntityInterface $entity) {
-    $row['label'] = $entity->label();
-    $row['field_name'] = $entity->get('field_name');
-    $row['json_path'] = $entity->get('json_path');
-    $row['json_field_name'] = $entity->get('label');
+    /**
+     * Builds a row for an entity in the entity listing.
+     *
+     * @param \Drupal\Core\Entity\EntityInterface $entity
+     *   The entity for which to build the row.
+     *
+     * @return array
+     *   A render array of the table row for displaying the entity.
+     */
+    public function buildRow(EntityInterface $entity)
+    {
+        $row['label'] = $entity->label();
+        $row['field_name'] = $entity->get('field_name');
+        $row['json_path'] = $entity->get('json_path');
+        $row['json_field_name'] = $entity->get('label');
 
-    return $row + parent::buildRow($entity);
-  }
+        return $row + parent::buildRow($entity);
+    }
 
-  /**
-   * Adds a descriptive message above the entity list.
-   *
-   * Typically, there's no need to override render(). We override here
-   * to add introductory markup before the table listing.
-   *
-   * @return array
-   *   Renderable array including description and table listing.
-   */
-  public function render() {
-    $build = [
-      '#markup' => $this->t('Manage and view JSON Field Processor Configurations.'),
-    ];
-    $build[] = parent::render();
-    return $build;
-  }
+    /**
+     * Adds a descriptive message above the entity list.
+     *
+     * Typically, there's no need to override render(). We override here
+     * to add introductory markup before the table listing.
+     *
+     * @return array
+     *   Renderable array including description and table listing.
+     */
+    public function render()
+    {
+        $build = [
+        '#markup' => $this->t('Manage and view JSON Field Processor Configurations.'),
+        ];
+        $build[] = parent::render();
+        return $build;
+    }
 
 }
