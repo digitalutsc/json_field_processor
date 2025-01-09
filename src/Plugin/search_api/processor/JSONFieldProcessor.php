@@ -143,9 +143,14 @@ class JSONFieldProcessor extends ProcessorPluginBase
             $json_data = $entity->get($json_field)->value;
             if ($json_data === null) {
                 return;
+            } else{
+                $data = json_decode($json_data, true);
             }
-            $data = json_decode($json_data, true);
             $result = JmesPath::search($json_path, $data);
+
+            if ($result === null) {
+                return;
+            }
 
             if (is_array($result)) {
                 $result = $this->flattenJson($result);
