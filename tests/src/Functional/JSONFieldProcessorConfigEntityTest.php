@@ -3,6 +3,7 @@
 namespace Drupal\Tests\json_field_processor\Functional;
 
 use Drupal\Core\Url;
+use Drupal\node\Entity\NodeType;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -25,7 +26,7 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
    *
    * @var array
    */
-  protected static $modules = ['json_field_processor'];
+  protected static $modules = ['json_field_processor', 'node'];
 
   /**
    * The installation profile to use with this test.
@@ -36,6 +37,22 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
    * @var string
    */
   protected $profile = 'minimal';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    parent::setUp();
+
+    // Ensure at least one node bundle exists so label validation can inspect
+    // node field definitions.
+    if (!NodeType::load('islandora_object')) {
+      NodeType::create([
+        'type' => 'islandora_object',
+        'name' => 'Repository Item',
+      ])->save();
+    }
+  }
 
   /**
    * Various functional tests of the Config Entity Example module.
@@ -102,7 +119,7 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
       'field_name' => 'Test Field Name',
       'id' => $json_field_processor_config_machine_name,
       'json_path' => 'data.test',
-      'label' => 'Test Label',
+      'label' => 'title',
     ];
 
     // Submit the form with the required values.
@@ -111,7 +128,7 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
     // Step 4: Verify that the config entity appears when we edit it.
     $this->drupalGet('/admin/json-field-processor/json_field_processor_config/' . $json_field_processor_config_machine_name . '/edit');
     // Ensure label is pre-filled correctly.
-    $assert->fieldValueEquals('label', 'Test Label');
+    $assert->fieldValueEquals('label', 'title');
     // Verify field_name value.
     $assert->fieldValueEquals('field_name', 'Test Field Name');
     // Verify JSON path value.
@@ -122,7 +139,7 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
     // Step 5: Verify that the label and machine name appear in the list.
     $this->drupalGet('/admin/json-field-processor/json_field_processor_config');
     // Ensure label is shown.
-    $assert->pageTextContains('Test Label');
+    $assert->pageTextContains('title');
     // Ensure json path is shown.
     $assert->pageTextContains('data.test');
     // Ensure field name is shown.
@@ -131,18 +148,17 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
     // Add another configuration.
     $this->clickLink('Add JSON Field Processor Configuration');
     $robby_machine_name = 'robby_json_field_processor_config';
-    $robby_label = 'Robby JSON Field Processor Configuration Label';
     $form_values = [
       'field_name' => 'Robby Field Name',
       'id' => $robby_machine_name,
       'json_path' => 'data.robby',
-      'label' => $robby_label,
+      'label' => 'uid',
     ];
     $this->submitForm($form_values, 'Create JSON Field Processor Configuration');
     $this->drupalGet('/admin/json-field-processor/json_field_processor_config');
     $assert->pageTextContains('Robby Field Name');
     $assert->pageTextContains('data.robby');
-    $assert->pageTextContains($robby_label);
+    $assert->pageTextContains('uid');
 
     // Step 6: Verify links on the listing page.
     $this->drupalGet(Url::fromRoute('entity.json_field_processor_config.list'));
