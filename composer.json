@@ -3,7 +3,9 @@
     "description": "Module to index json field data using search API",
     "type": "drupal-module",
     "require": {
-        "mtdowling/jmespath.php": "^2.6"
+        "mtdowling/jmespath.php": "^2.6",
+        "drupal/search_api_solr": "^4.3",
+        "drupal/json_field": "^1.3"
     },
     "authors": [
         {
