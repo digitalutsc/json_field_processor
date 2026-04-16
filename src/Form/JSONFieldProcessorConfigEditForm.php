@@ -30,7 +30,7 @@ class JSONFieldProcessorConfigEditForm extends JSONFieldProcessorConfigFormBase 
     // Get the default actions from the base class.
     $actions = parent::actions($form, $form_state);
 
-    // Change the submit button text to reflect the "Update Configuration" action.
+    // Change submit button text to reflect the "Update Configuration" action.
     $actions['submit']['#value'] = $this->t('Update Configuration');
 
     // Return the modified actions array.

@@ -40,7 +40,8 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
   /**
    * Various functional tests of the Config Entity Example module.
    *
-   * 1) Verify that the default json_field_processor_config entity was created when the module was installed.
+   * 1) Verify that the default json_field_processor_config entity was created
+   * when the module was installed.
    *
    * 2) Verify that permissions are applied to the various defined paths.
    *
@@ -54,8 +55,8 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
     $assert = $this->assertSession();
 
     // 2) Verify that permissions are applied to the various defined paths.
-    // Define some paths. Since the default json_field_processor_config entity is defined, we can use it
-    // in our management paths.
+    // Define some paths. Since the default json_field_processor_config entity
+    // is defined, we can use it in our management paths.
     $forbidden_paths = [
       '/admin/json-field-processor/json_field_processor_config',
       '/admin/json-field-processor/json_field_processor_config/add',
@@ -160,22 +161,24 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
     // Verify the delete button exists.
     $assert->buttonExists('Delete');
 
-    // Step 8: Verify the cancel button on the delete page redirects to the list page.
+    // Step 8: Verify that the cancel button on the delete page
+    // redirects to the list page.
     $cancel_button = $this->xpath(
           '//a[@id="edit-cancel" and contains(@href, :path)]',
           [':path' => '/admin/json-field-processor/json_field_processor_config']
       );
     $this->assertEquals(count($cancel_button), 1, 'Found cancel button linking to list page.');
 
+    // phpcs:disable -- Drupal.Commenting.InlineComment.SpacingBefore
     // Step 9: Reserved keyword test.
-    //  $this->drupalGet(Url::fromRoute('entity.json_field_processor_config.add_form'));
-    //  $this->submitForm([
-    //      'field_name' => 'Custom Field Name',
-    //      'id' => 'custom',
-    //      'json_path' => 'data.custom',
-    //      'label' => 'Custom',
-    //  ], 'Create JSON Field Processor Configuration');
-    //  $assert->pageTextContains('Additionally, it cannot be the reserved word "custom".');.
+    // $this->drupalGet(Url::fromRoute('entity.json_field_processor_config.add_form'));
+    // $this->submitForm([
+    //     'field_name' => 'Custom Field Name',
+    //     'id' => 'custom',
+    //     'json_path' => 'data.custom',
+    //     'label' => 'Custom',
+    // ], 'Create JSON Field Processor Configuration');
+    // $assert->pageTextContains('Additionally, it cannot be the reserved word "custom".');.
   }
 
 }

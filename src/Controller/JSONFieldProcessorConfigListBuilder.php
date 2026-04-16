@@ -8,13 +8,14 @@ use Drupal\Core\Entity\EntityInterface;
 /**
  * Provides a listing of configuration entities for JSON Field Processor.
  *
- * This controller lists `json_field_processor_config` entities in a tabular form.
+ * This controller lists `json_field_processor_config` entities in tabular form.
  * We override `buildHeader()` and `buildRow()` to control the columns and rows
  * of the table display.
  *
  * Drupal locates this list controller using the "list" entry in the entity
  * type's annotation. The route for this listing is defined in
- * json_field_processor.routing.yml, where "_entity_list" points to this entity type ID.
+ * json_field_processor.routing.yml, where "_entity_list" points to this
+ * entity type ID.
  *
  * @ingroup json_field_processor
  */

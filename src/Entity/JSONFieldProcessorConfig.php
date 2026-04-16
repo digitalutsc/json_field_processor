@@ -8,7 +8,8 @@ use Drupal\search_api\Entity\Index;
 /**
  * Defines the json_field_processor_config entity for JSON field processor.
  *
- * This configuration entity stores information about JSON field processor configurations.
+ * This configuration entity stores information about JSON field
+ * processor configurations.
  *
  * @ConfigEntityType(
  *   id = "json_field_processor_config",

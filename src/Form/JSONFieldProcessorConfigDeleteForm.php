@@ -10,7 +10,8 @@ use Drupal\Core\Url;
  * Class JSONFieldProcessorConfigDeleteForm.
  *
  * Provides a confirm form for deleting the json_field_processor_config entity.
- * This form asks the user to confirm if they really want to delete the json_field_processor_config.
+ * This form asks the user to confirm if they really want to delete the
+ * json_field_processor_config.
  *
  * @ingroup config_entity_example
  */

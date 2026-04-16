@@ -14,7 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Typically, we need to build the same form for both adding a new entity,
  * and editing an existing entity. Instead of duplicating our form code,
  * we create a base class. Drupal never routes to this class directly,
- * but instead through the child classes of JSONFieldProcessorConfigAddForm and JSONFieldProcessorConfigEditForm.
+ * but instead through the child classes of JSONFieldProcessorConfigAddForm
+ * and JSONFieldProcessorConfigEditForm.
  *
  * @ingroup json_field_processor
  */
@@ -63,7 +64,8 @@ class JSONFieldProcessorConfigFormBase extends EntityForm {
    *   An associative array containing the current state of the form.
    *
    * @return array
-   *   An associative array containing the json_field_processor_config add/edit form.
+   *   An associative array containing the json_field_processor_config
+   *   add/edit form.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     // Get anything we need from the base class.
@@ -134,7 +136,8 @@ class JSONFieldProcessorConfigFormBase extends EntityForm {
    *   TRUE if this format already exists, FALSE otherwise.
    */
   public function exists($entity_id, array $element, FormStateInterface $form_state) {
-    // Use the query factory to build a new json_field_processor_config entity query.
+    // Use the query factory to build a new json_field_processor_config
+    // entity query.
     $query = $this->entityStorage->getQuery();
 
     // Query the entity ID to see if it's in use.
@@ -231,12 +234,18 @@ class JSONFieldProcessorConfigFormBase extends EntityForm {
     if ($status == SAVED_UPDATED) {
       // If we edited an existing entity...
       $this->messenger()->addMessage($this->t('JSON Field Processor Configuration %label has been updated.', ['%label' => $json_field_processor_config->label()]));
-      $this->logger('contact')->notice('JSON Field Processor Configuration %label has been updated.', ['%label' => $json_field_processor_config->label(), 'link' => $edit_link]);
+      $this->logger('contact')->notice('JSON Field Processor Configuration %label has been updated.', [
+        '%label' => $json_field_processor_config->label(),
+        'link' => $edit_link,
+      ]);
     }
     else {
       // If we created a new entity...
       $this->messenger()->addMessage($this->t('JSON Field Processor Configuration %label has been added.', ['%label' => $json_field_processor_config->label()]));
-      $this->logger('contact')->notice('JSON Field Processor Configuration %label has been added.', ['%label' => $json_field_processor_config->label(), 'link' => $edit_link]);
+      $this->logger('contact')->notice('JSON Field Processor Configuration %label has been added.', [
+        '%label' => $json_field_processor_config->label(),
+        'link' => $edit_link,
+      ]);
     }
 
     // Redirect the user back to the listing route after the save operation.

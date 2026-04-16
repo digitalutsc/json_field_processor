@@ -1,5 +1,8 @@
 <?php
 
+// phpcs:disable -- Drupal.NamingConventions.ValidVariableName.LowerCamelName
+// phpcs:disable -- Drupal.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
+
 namespace Drupal\json_field_processor\Plugin\search_api\processor;
 
 use Drupal\search_api\Datasource\DatasourceInterface;
@@ -43,13 +46,21 @@ class JSONFieldProcessor extends ProcessorPluginBase {
 
   /**
    * Class property to store the results in a key-value array.
+   *
+   * @var array<string, string>
    */
   protected $json_field_configurations = [];
 
+  /**
+   * An associative array mapping names to labels.
+   *
+   * @var array<string, string>
+   */
   protected $json_field_name = [];
 
   /**
    * Load the relationship types from the database.
+   *
    * Populates $json_field_configurations with field_name => json_path pairs.
    */
   protected function loadJSONFieldConfigurations() {
@@ -66,7 +77,7 @@ class JSONFieldProcessor extends ProcessorPluginBase {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     /**
@@ -166,7 +177,8 @@ class JSONFieldProcessor extends ProcessorPluginBase {
    * @param string $parentKey
    *   The parent key for nested elements (used recursively).
    *
-   * @return string The flattened key:value pairs.
+   * @return string
+   *   The flattened key:value pairs.
    */
   private function flattenJson($data, $parentKey = '') {
     $result = [];
@@ -184,7 +196,7 @@ class JSONFieldProcessor extends ProcessorPluginBase {
         $result[] = $this->flattenJson($value, $fullKey);
       }
       else {
-        // Handle scalar values (strings, numbers, etc.) and avoid extra escaping.
+        // Handle scalar values (strings, numbers, etc.) & avoid extra escaping.
         if (is_string($value)) {
           // Ensure no extra escaping by directly adding the value.
           $result[] = $fullKey . ': "' . addslashes($value) . '"';

@@ -10,7 +10,8 @@ use Drupal\Core\Session\AccountInterface;
 /**
  * Defines an access controller for the json_field_processor_config entity.
  *
- * This controller checks access permissions for the json_field_processor_config entity.
+ * This controller checks access permissions for the
+ * json_field_processor_config entity.
  *
  * @see \Drupal\json_field_processor\Entity\JSONFieldProcessorConfig
  *
@@ -30,7 +31,8 @@ class JSONFieldProcessorConfigAccessController extends EntityAccessControlHandle
     // Otherwise, check operation-specific permissions.
     switch ($operation) {
       case 'view':
-        // Allow access for view operation (or customize this further if needed).
+        // Allow access for view operation.
+        // (or customize this further if needed).
         return AccessResult::allowedIfHasPermission($account, 'view json field processor configurations');
 
       case 'edit':
