@@ -1,5 +1,7 @@
 <?php
 
+// phpcs:disable -- DrupalPractice.Objects.GlobalDrupal.GlobalDrupal
+
 namespace Drupal\json_field_processor\Form;
 
 use Drupal\Core\Entity\EntityForm;
