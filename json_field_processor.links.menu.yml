@@ -20,4 +20,3 @@ json_field_processor.admin_json_field_processor_config_list:
   route_name: entity.json_field_processor_config.list
   parent: json_field_processor.admin
   weight: 0
-
