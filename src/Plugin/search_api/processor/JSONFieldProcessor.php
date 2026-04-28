@@ -1,8 +1,5 @@
 <?php
 
-// phpcs:disable -- Drupal.NamingConventions.ValidVariableName.LowerCamelName
-// phpcs:disable -- Drupal.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
-
 namespace Drupal\json_field_processor\Plugin\search_api\processor;
 
 use Drupal\search_api\Datasource\DatasourceInterface;
@@ -49,21 +46,21 @@ class JSONFieldProcessor extends ProcessorPluginBase {
    *
    * @var array<string, string>
    */
-  protected $json_field_configurations = [];
+  protected $jsonFieldConfigurations = [];
 
   /**
    * An associative array mapping names to labels.
    *
    * @var array<string, string>
    */
-  protected $json_field_name = [];
+  protected $jsonFieldName = [];
 
   /**
    * Load the relationship types from the database.
    *
-   * Populates $json_field_configurations with field_name => json_path pairs.
+   * Populates $jsonFieldConfigurations with field_name => json_path pairs.
    */
-  protected function loadJSONFieldConfigurations() {
+  protected function loadJsonFieldConfigurations() {
     // Fetch the results from the database.
     $json_field_processor_config = \Drupal::entityTypeManager()->getStorage('json_field_processor_config')->loadMultiple();
     foreach ($json_field_processor_config as $submission) {
@@ -71,8 +68,8 @@ class JSONFieldProcessor extends ProcessorPluginBase {
       $field_name = $submission->id();
       $json_path = $submission->json_path;
       // Process each submission as needed.
-      $this->json_field_configurations[$field_name] = $json_path;
-      $this->json_field_name[$field_name] = $label;
+      $this->jsonFieldConfigurations[$field_name] = $json_path;
+      $this->jsonFieldName[$field_name] = $label;
     }
   }
 
@@ -94,10 +91,10 @@ class JSONFieldProcessor extends ProcessorPluginBase {
    */
   public function getPropertyDefinitions(?DatasourceInterface $datasource = NULL) {
     $properties = [];
-    $this->loadJSONFieldConfigurations();
+    $this->loadJsonFieldConfigurations();
 
     if (!$datasource) {
-      foreach ($this->json_field_configurations as $field_name => $json_path) {
+      foreach ($this->jsonFieldConfigurations as $field_name => $json_path) {
         $definition = [
           'label' => $this->t('Field: @label', ['@label' => $json_path]),
           'description' => $this->t('Json Data of Islandora Site to be indexed to Solr'),
@@ -121,7 +118,7 @@ class JSONFieldProcessor extends ProcessorPluginBase {
 
     // Process JSON fields for supported entity types.
     if (in_array($datasourceId, ['entity:node', 'entity:media'])) {
-      foreach ($this->json_field_configurations as $field_name => $json_path) {
+      foreach ($this->jsonFieldConfigurations as $field_name => $json_path) {
         $this->processJsonField($entity, $item, $field_name, $json_path);
       }
     }
@@ -140,7 +137,7 @@ class JSONFieldProcessor extends ProcessorPluginBase {
    *   The JSON path to process.
    */
   private function processJsonField($entity, ItemInterface $item, $field_name, $json_path) {
-    $json_field = $this->json_field_name[$field_name];
+    $json_field = $this->jsonFieldName[$field_name];
 
     if ($entity->hasField($json_field)) {
       $json_data = $entity->get($json_field)->value;

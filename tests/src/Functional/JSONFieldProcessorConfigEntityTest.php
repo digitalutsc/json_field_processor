@@ -185,16 +185,17 @@ class JSONFieldProcessorConfigEntityTest extends BrowserTestBase {
       );
     $this->assertEquals(count($cancel_button), 1, 'Found cancel button linking to list page.');
 
-    // phpcs:disable -- Drupal.Commenting.InlineComment.SpacingBefore
     // Step 9: Reserved keyword test.
     // $this->drupalGet(Url::fromRoute('entity.json_field_processor_config.add_form'));
     // $this->submitForm([
-    //     'field_name' => 'Custom Field Name',
-    //     'id' => 'custom',
-    //     'json_path' => 'data.custom',
-    //     'label' => 'Custom',
+    // 'field_name' => 'Custom Field Name',
+    // 'id' => 'custom',
+    // 'json_path' => 'data.custom',
+    // 'label' => 'Custom',
     // ], 'Create JSON Field Processor Configuration');
-    // $assert->pageTextContains('Additionally, it cannot be the reserved word "custom".');.
+    // $assert->pageTextContains(
+    // 'Additionally, it cannot be the reserved word "custom".'
+    // );.
   }
 
 }

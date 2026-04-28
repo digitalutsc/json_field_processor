@@ -1,13 +1,13 @@
 <?php
 
-// phpcs:disable -- DrupalPractice.Objects.GlobalDrupal.GlobalDrupal
-
 namespace Drupal\json_field_processor\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -31,13 +31,37 @@ class JSONFieldProcessorConfigFormBase extends EntityForm {
   protected $entityStorage;
 
   /**
+   * The bundle info services.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
+   */
+  protected $bundleInfo;
+
+  /**
+   * The field manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $fieldManager;
+
+  /**
    * Construct the JSONFieldProcessorConfigFormBase.
    *
    * @param \Drupal\Core\Entity\EntityStorageInterface $entity_storage
    *   An entity query factory for the json_field_processor_config entity type.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundle_info
+   *   The bundle info services.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $field_manager
+   *   The field manager service.
    */
-  public function __construct(EntityStorageInterface $entity_storage) {
+  public function __construct(
+    EntityStorageInterface $entity_storage,
+    EntityTypeBundleInfoInterface $bundle_info,
+    EntityFieldManagerInterface $field_manager,
+  ) {
     $this->entityStorage = $entity_storage;
+    $this->bundleInfo = $bundle_info;
+    $this->fieldManager = $field_manager;
   }
 
   /**
@@ -50,7 +74,11 @@ class JSONFieldProcessorConfigFormBase extends EntityForm {
    *   The form object.
    */
   public static function create(ContainerInterface $container) {
-    $form = new static($container->get('entity_type.manager')->getStorage('json_field_processor_config'));
+    $form = new static(
+      $container->get('entity_type.manager')->getStorage('json_field_processor_config'),
+      $container->get('entity_type.bundle.info'),
+      $container->get('entity_field.manager')
+    );
     $form->setMessenger($container->get('messenger'));
     return $form;
   }
@@ -184,17 +212,17 @@ class JSONFieldProcessorConfigFormBase extends EntityForm {
     $entered_name = $form_state->getValue('label');
 
     // Load field definitions for both 'node' and 'media' entity types.
-    $node_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('node');
-    $media_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('media');
+    $node_bundles = $this->bundleInfo->getBundleInfo('node');
+    $media_bundles = $this->bundleInfo->getBundleInfo('media');
 
     $node_fields = [];
     foreach (array_keys($node_bundles) as $bundle) {
-      $node_fields += \Drupal::service('entity_field.manager')->getFieldDefinitions('node', $bundle);
+      $node_fields += $this->fieldManager->getFieldDefinitions('node', $bundle);
     }
 
     $media_fields = [];
     foreach (array_keys($media_bundles) as $bundle) {
-      $media_fields += \Drupal::service('entity_field.manager')->getFieldDefinitions('media', $bundle);
+      $media_fields += $this->fieldManager->getFieldDefinitions('media', $bundle);
     }
 
     // Check if the field with the given machine name exists.
